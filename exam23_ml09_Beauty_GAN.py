@@ -11,10 +11,10 @@ import numpy as np
 
 
 detector = dlib.get_frontal_face_detector()
-sp = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat')
+sp = dlib.shape_predictor('../models/shape_predictor_5_face_landmarks.dat')
 
 
-img = dlib.load_rgb_image('./imgs/02.jpg')
+img = dlib.load_rgb_image('../imgs/02.jpg')
 plt.figure(figsize=(16,10))
 plt.imshow(img)
 plt.show()
@@ -61,7 +61,7 @@ def align_faces(img):
         objs.append(s)
         faces = dlib.get_face_chips(img, objs, size=256, padding=0.35) #padding 사진에 여백?을 줌
         return faces
-test_img = dlib.load_rgb_image('./imgs/03.jpg')
+test_img = dlib.load_rgb_image('../imgs/03.jpg')
 test_faces = align_faces(test_img)
 fig, axes = plt.subplots(1, len(test_faces)+1, figsize=(26, 16))
 axes[0].imshow(test_img)
@@ -72,7 +72,7 @@ plt.show()
 
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
-saver = tf.train.import_meta_graph('./models/model.meta')
+saver = tf.train.import_meta_graph('../models/model.meta')
 saver.restore(sess, tf.train.latest_checkpoint('../models'))
 graph = tf.get_default_graph()
 X = graph.get_tensor_by_name('X:0')
@@ -86,10 +86,10 @@ def deprocess(img):
     return (img + 1) / 2
 
 
-img1 = dlib.load_rgb_image('./imgs/no_makeup/xfsy_0405.png')
+img1 = dlib.load_rgb_image('../imgs/no_makeup/xfsy_0405.png')
 img1_faces = align_faces(img1)
 
-img2 = dlib.load_rgb_image('./imgs/makeup/002.jpg')
+img2 = dlib.load_rgb_image('../imgs/makeup/002.jpg')
 img2_faces = align_faces(img2)
 
 fig, axes = plt.subplots(1, 2, figsize=(16,10))
